@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="TransactionDiary.Views.TransactorPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="StackLayout" BasedOn="{StaticResource MyPagePadding}"></Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+      <StackLayout Style="{StaticResource MyPagePadding}">
+          <Entry Placeholder="Code" Text="{Binding Code}" />
+          <Entry Placeholder="Name" Text="{Binding Name}"  />
+          <Entry Placeholder="Address" Text="{Binding Address}" />
+          <Entry Placeholder="City" Text="{Binding City}" />
+          <Entry Placeholder="Zip" Text="{Binding Zip}" Keyboard="Numeric" />
+          <Entry Placeholder="Phone Work" Text="{Binding PhoneWork}" Keyboard="Telephone" />
+            <Entry Placeholder="Phone Mobile" Text="{Binding PhoneMobile}" Keyboard="Telephone"/>
+            <Entry Placeholder="Phone Fax" Text="{Binding PhoneFax}" Keyboard="Telephone"/>
+          <Entry Placeholder="EMail" Text="{Binding Email}" Keyboard="Email"/>
+
+<Button Text="Save" Command="{Binding SaveCommand}"></Button>
+      </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

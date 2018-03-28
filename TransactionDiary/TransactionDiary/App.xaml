@@ -6,6 +6,18 @@
 	<Application.Resources>
 
 		<!-- Application resource dictionary -->
-
-	</Application.Resources>
+	    <ResourceDictionary>
+	        <OnPlatform x:Key="CustomPadding" x:TypeArguments="Thickness">
+	            <On Platform="Android">
+	                <OnIdiom x:TypeArguments="Thickness" Phone="5,5" Tablet="10,10"/>
+	            </On>
+	            <On Platform="UWP">
+	                <OnIdiom x:TypeArguments="Thickness" Desktop="20,20" Tablet="7,7"/>
+	            </On>
+	        </OnPlatform>
+	        <Style TargetType="StackLayout" x:Key="MyPagePadding">
+	            <Setter Property="Padding" Value="{StaticResource CustomPadding}" />
+	        </Style>
+	    </ResourceDictionary>
+    </Application.Resources>
 </prism:PrismApplication>

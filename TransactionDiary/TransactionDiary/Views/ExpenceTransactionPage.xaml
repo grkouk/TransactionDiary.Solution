@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:c="clr-namespace:Prism.Converters;assembly=TransactionDiary"
+             xmlns:ext="clr-namespace:TransactionDiary.MarkupExtensions;assembly=TransactionDiary"
+             x:Class="TransactionDiary.Views.ExpenceTransactionPage"
+             
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <c:AutoCompleteValueConverter x:Key="AutoCompleteValueConverter"/>
+            <Style TargetType="StackLayout" BasedOn="{StaticResource MyPagePadding}"></Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="{ext:PlatformImage SourceImage='save'}" Order="Primary" Priority="0" Command="{Binding SaveCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Ημερομηνία" Grid.Column="0"></Label>
+            <DatePicker Date="{Binding TransactionDate}" Grid.Column="1" Grid.ColumnSpan="2" />
+
+            <Label Text="Συν/νος" Grid.Row="1" Grid.Column="0" />
+            <autocomplete:SfAutoComplete HeightRequest="40" SuggestionMode="Contains"
+                                                 ShowClearButton="True"
+                                                 Grid.Row="1" Grid.Column="1"
+                                                 SelectedItem="{Binding SelectedTransactorItem, Mode=TwoWay}"
+                                                 SelectedIndex="{Binding SelectedTransactorIndex, Mode=TwoWay}"
+                                                 Text="{Binding TransactorText, Mode=TwoWay}"
+                                                 DisplayMemberPath="Name"
+                                                 DataSource="{Binding TransactorsCollection}">
+                <autocomplete:SfAutoComplete.Behaviors>
+                    <b:EventToCommandBehavior EventName="SelectionChanged"
+                                                      Command="{Binding TransactorValueChangedCommand}"
+                                                      EventArgsConverter="{StaticResource AutoCompleteValueConverter}" />
+                </autocomplete:SfAutoComplete.Behaviors>
+            </autocomplete:SfAutoComplete>
+            <Button Image="{ext:PlatformImage SourceImage='search'}" Grid.Row="1" Grid.Column="2" Command="{Binding SearchTransactors }"></Button>
+            <Button Image="{ext:PlatformImage SourceImage='plus'}" Grid.Row="1" Grid.Column="3" Command="{Binding InsertTransactor}"></Button>
+
+
+            <Label Text="Κατηγορία" Grid.Row="2" Grid.Column="0"></Label>
+            <autocomplete:SfAutoComplete HeightRequest="40" SuggestionMode="Contains" ShowClearButton="True"
+                                             SelectedItem="{Binding SelectedCategoryItem, Mode=TwoWay}"
+                                             SelectedIndex="{Binding SelectedCategoryIndex, Mode=TwoWay}"
+                                             DisplayMemberPath="Name"
+                                             Text="{Binding CategoryText, Mode=TwoWay}"
+                                             Grid.Row="2" Grid.Column="1"
+                                             DataSource="{Binding CategoriesCollection}" />
+            <Button Image="{ext:PlatformImage SourceImage='search'}" Grid.Row="2" Grid.Column="2" Command="{Binding SearchCategories }"></Button>
+            <Button Image="{ext:PlatformImage SourceImage='plus'}" Grid.Row="2" Grid.Column="3" Command="{Binding InsertCategory}"></Button>
+
+            <Label Text="Κ.Κόστους" Grid.Row="3" Grid.Column="0"></Label>
+            <autocomplete:SfAutoComplete HeightRequest="40" SuggestionMode="Contains" ShowClearButton="True"
+                                         SelectedItem="{Binding SelectedCostCentreItem, Mode=TwoWay}"
+                                         SelectedIndex="{Binding SelectedCostCentreIndex, Mode=TwoWay}"
+                                         DisplayMemberPath="Name"
+                                         Text="{Binding CostCentreText, Mode=TwoWay}"
+                                         Grid.Row="3" Grid.Column="1"
+                                         DataSource="{Binding CostCentreCollection}" />
+            <Button Image="{ext:PlatformImage SourceImage='search'}" Grid.Row="3" Grid.Column="2" Command="{Binding SearchCostCentres }"></Button>
+            <Button Image="{ext:PlatformImage SourceImage='plus'}" Grid.Row="3" Grid.Column="3" Command="{Binding InsertCostCentre}"></Button>
+
+            <Label Text="Εταιρεία" Grid.Row="4" Grid.Column="0"></Label>
+            <autocomplete:SfAutoComplete HeightRequest="40" SuggestionMode="Contains" ShowClearButton="True"
+                                         SelectedItem="{Binding SelectedCompanyItem, Mode=TwoWay}"
+                                         SelectedIndex="{Binding SelectedCompanyIndex, Mode=TwoWay}"
+                                         DisplayMemberPath="Name"
+                                         Text="{Binding CompanyText, Mode=TwoWay}"
+                                         Grid.Row="4" Grid.Column="1"
+                                         DataSource="{Binding CompaniesCollection}" />
+            <Button Image="{ext:PlatformImage SourceImage='search'}" Grid.Row="4" Grid.Column="2" Command="{Binding SearchCompanies }"></Button>
+            <Button Image="{ext:PlatformImage SourceImage='plus'}" Grid.Row="4" Grid.Column="3" Command="{Binding InsertCompany}"></Button>
+
+
+            <Label Text="Αρ.Παρ." Grid.Row="5" Grid.Column="0"></Label>
+            <Entry Placeholder="Recerence Code" Text="{Binding ReferenceCode}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"></Entry>
+
+            <Label Text="Περιγραφή" Grid.Row="6" Grid.Column="0"></Label>
+            <Entry Placeholder="Description" Text="{Binding Description}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"></Entry>
+
+            <Label Text="ΦΠΑ" Grid.Row="7" Grid.Column="0"></Label>
+            <Entry Placeholder="Amount Fpa" Text="{Binding AmountFpa}" Keyboard="Numeric" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"></Entry>
+
+            <Label Text="Καθαρά" Grid.Row="8" Grid.Column="0"></Label>
+            <Entry Placeholder="Amount Net" Text="{Binding AmountNet}" Keyboard="Numeric" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"></Entry>
+            <!--<Button Text="Save" Command="{Binding SaveCommand}"></Button>-->
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

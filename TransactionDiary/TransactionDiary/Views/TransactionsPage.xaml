@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="False"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:local="clr-namespace:TransactionDiary;assembly=TransactionDiary"
+             xmlns:ext="clr-namespace:TransactionDiary.MarkupExtensions;assembly=TransactionDiary"
+             xmlns:c="clr-namespace:Prism.Converters;assembly=TransactionDiary"
+             x:Class="TransactionDiary.Views.TransactionsPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="StackLayout" BasedOn="{StaticResource MyPagePadding}" />
+            <local:DataGridCustomStyle x:Key="DataGridCustomStyle" />
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="{ext:PlatformImage SourceImage='plus'}"  Priority="1" Order="Primary" Command="{Binding AddCommand}" />
+        <ToolbarItem Icon="{ext:PlatformImage SourceImage='pencil'}" Priority="2" Order="Primary" Command="{Binding ModifyCommand}" />
+        <ToolbarItem Icon="{ext:PlatformImage SourceImage='delete'}" Priority="2" Order="Primary" Command="{Binding DeleteCommand}" />
+        <ToolbarItem Text="Ανανέωση" Icon="{ext:PlatformImage SourceImage='synchronize'}"  Priority="3" Order="Secondary" Command="{Binding RefreshCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource MyPagePadding}">
+
+            <Picker Title="Περίοδος" ItemsSource="{Binding DateFilters}" ItemDisplayBinding="{Binding Name}"
+                    SelectedIndex="{Binding SelectedDateFilterIndex}" SelectedItem="{Binding SelectedDateFilterItem}"
+                    ></Picker>
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <syncfusion:SfDataGrid ItemsSource="{Binding ItemsCollection}"
+                        AutoGenerateColumns="False"
+                                       x:Name="dataGrid"              
+                      GridStyle="{StaticResource DataGridCustomStyle}"
+                        AllowResizingColumn="True"
+                    LiveDataUpdateMode="AllowSummaryUpdate"  
+                                      
+                        SelectionMode="Single"
+                        ScrollingMode="PixelLine"
+                        VerticalOverScrollMode="None"
+                        SelectedIndex="{Binding SelectedRowIndex}"
+                        SelectedItem="{Binding SelectedGridItem}"
+                        AllowSorting="True" AllowEditing="False" IsBusy="{Binding IsBusy}" 
+                        AllowPullToRefresh="True" PullToRefreshCommand="{Binding RefreshCommand}"
+                       VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"            >
+
+                    <syncfusion:SfDataGrid.Columns >
+                        <syncfusion:GridDateTimeColumn ColumnSizer="Auto" HeaderText="Ημερομηνία" 
+                                                   MappingName="TransactionDate"  Format="dd/MM/yyyy"/>
+                        <syncfusion:GridTextColumn ColumnSizer="Auto" HeaderText="Συν/νος" MappingName="TransactorName" />
+                        <syncfusion:GridTextColumn ColumnSizer="Auto" HeaderText="Κατηγορία" MappingName="CategoryName" />
+                        <syncfusion:GridTextColumn ColumnSizer="Auto" HeaderText="Κωδ.Αν." MappingName="ReferenceCode" />
+                        <syncfusion:GridTextColumn ColumnSizer="Auto" HeaderText="ΚΚ" MappingName="CostCentreName" />
+                        <syncfusion:GridNumericColumn  ColumnSizer="Auto" HeaderText="Καθαρά" MappingName="AmountNet" TextAlignment="End" />
+                        <syncfusion:GridNumericColumn  ColumnSizer="Auto" HeaderText="ΦΠΑ" MappingName="AmountFpa" TextAlignment="End" />
+                        <syncfusion:GridNumericColumn  ColumnSizer="LastColumnFill" HeaderText="Σύνολο" MappingName="AmountTotal" TextAlignment="End" />
+                    </syncfusion:SfDataGrid.Columns>
+                    <syncfusion:SfDataGrid.TableSummaryRows>
+
+                        <syncfusion:GridTableSummaryRow Name="TableSummary" ShowSummaryInRow="False" >
+                            <syncfusion:GridTableSummaryRow.SummaryColumns>
+                                <syncfusion:GridSummaryColumn Name="FpaSummary" 
+                                                Format="{}{Sum}" MappingName="AmountFpa"
+                                                            
+                                                SummaryType="DoubleAggregate">
+
+                                </syncfusion:GridSummaryColumn>
+                                <syncfusion:GridSummaryColumn Name="NetSummary" 
+                                                              Format="{}{Sum}" MappingName="AmountNet"
+                                                                  
+                                                              SummaryType="DoubleAggregate">
+                                   
+                                </syncfusion:GridSummaryColumn>
+                                <syncfusion:GridSummaryColumn Name="TotalSummary" 
+                                                              Format="{}{Sum}" MappingName="AmountTotal"
+                                                                  
+                                                              SummaryType="DoubleAggregate">
+
+                                </syncfusion:GridSummaryColumn>
+                            </syncfusion:GridTableSummaryRow.SummaryColumns>
+                        </syncfusion:GridTableSummaryRow>
+                    </syncfusion:SfDataGrid.TableSummaryRows>
+                </syncfusion:SfDataGrid>
+
+                <busyindicator:SfBusyIndicator AnimationType="HorizontalPulsingBox" IsBusy="{Binding IsBusy}"></busyindicator:SfBusyIndicator>
+
+            </Grid>
+            <!--<ActivityIndicator IsRunning="{Binding IsBusy}" />-->
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

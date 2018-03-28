@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TransactionDiary.UWP")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Transaction Diary")]
+[assembly: AssemblyDescription("Transaction Diary")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("GrKouk")]
 [assembly: AssemblyProduct("TransactionDiary.UWP")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright ©  2018 George Koukoudis")]
+[assembly: AssemblyTrademark("George Koukoudis")]
 [assembly: AssemblyCulture("")]
 
 // Version information for an assembly consists of the following four values:

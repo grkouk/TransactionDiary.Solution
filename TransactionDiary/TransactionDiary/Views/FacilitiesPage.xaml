@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+              prism:ViewModelLocator.AutowireViewModel="True"
+                x:Class="TransactionDiary.Views.FacilitiesPage"
+             Title="{Binding Title}">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Add" Command="{Binding AddCommand}"></Button>
+                <Button Text="Refresh" Command="{Binding RefreshCommand}"></Button>
+            </StackLayout>
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+                <ListView ItemsSource="{Binding FacilitiesCollection}" 
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}" 
+                      VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Name}" Detail="{Binding ShortDescription}"></TextCell>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
+            </Grid>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

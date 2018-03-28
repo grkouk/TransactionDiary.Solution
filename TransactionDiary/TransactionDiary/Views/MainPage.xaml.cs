@@ -11,7 +11,7 @@ namespace TransactionDiary.Views
 	{
 		public MainPage ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
 	}
 }
