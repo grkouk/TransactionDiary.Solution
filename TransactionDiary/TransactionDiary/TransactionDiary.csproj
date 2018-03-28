@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="16.1.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.GridCommon" Version="16.1.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete" Version="16.1.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="16.1.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="16.1.0.26" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.296286-pre2" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.0.0.396" />
   </ItemGroup>
 
