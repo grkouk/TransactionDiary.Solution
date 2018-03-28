@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="False"
+             prism:ViewModelLocator.AutowireViewModel="true"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:local="clr-namespace:TransactionDiary;assembly=TransactionDiary"
              xmlns:ext="clr-namespace:TransactionDiary.MarkupExtensions;assembly=TransactionDiary"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              xmlns:c="clr-namespace:Prism.Converters;assembly=TransactionDiary"
              x:Class="TransactionDiary.Views.TransactionsPage"
              Title="{Binding Title}">
@@ -28,11 +29,17 @@
 
             <Picker Title="Περίοδος" ItemsSource="{Binding DateFilters}" ItemDisplayBinding="{Binding Name}"
                     SelectedIndex="{Binding SelectedDateFilterIndex}" SelectedItem="{Binding SelectedDateFilterItem}"
-                    ></Picker>
+                    >
+                <Picker.Behaviors>
+                    <b:EventToCommandBehavior EventName="SelectedIndexChanged" 
+                                              Command="{Binding PickerSelectedIndexChangedCommand}"
+                                             />
+                </Picker.Behaviors>
+            </Picker>
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <syncfusion:SfDataGrid ItemsSource="{Binding ItemsCollection}"
                         AutoGenerateColumns="False"
-                                       x:Name="dataGrid"              
+                                                 
                       GridStyle="{StaticResource DataGridCustomStyle}"
                         AllowResizingColumn="True"
                     LiveDataUpdateMode="AllowSummaryUpdate"  

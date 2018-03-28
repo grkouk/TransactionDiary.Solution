@@ -242,6 +242,15 @@ namespace TransactionDiary.ViewModels
 
         private DateFilter _selectedDateFilterItem;
 
+
+        private DelegateCommand _pickerSelectedIndexChangedCommand;
+        public DelegateCommand PickerSelectedIndexChangedCommand =>
+            _pickerSelectedIndexChangedCommand ?? (_pickerSelectedIndexChangedCommand = new DelegateCommand(PickerSelectedIndexChangedCmd));
+
+        private async void PickerSelectedIndexChangedCmd()
+        {
+            SettingDateFilter = SelectedDateFilterIndex;
+        }
         #region GridBinding Properties
 
         private int _selectedRowIndex;
