@@ -11,7 +11,7 @@
                         Icon="ic_hamburger.png">
 
             <x:Arguments>
-                <ContentPage Title="My App">
+                <ContentPage Title="Grkouk App">
 
                     <ListView ItemsSource="{Binding MenuItems}"
                               SelectedItem="{Binding SelectedMenuItem}"

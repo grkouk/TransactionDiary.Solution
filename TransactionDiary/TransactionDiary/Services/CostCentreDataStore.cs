@@ -4,15 +4,23 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using TransactionDiary.Models;
 
 namespace TransactionDiary.Services
 {
     public class CostCentreDataStore:IDataStore<CostCentre,CostCentre,CostCentre>
     {
-        private const string BaseUrl = "http://testapi.potos.tours/api/CοstCentres";
-        //private const string BaseUrl = "http://localhost:60928/api/CostCentres/";
+        private static ISettings AppSettings => CrossSettings.Current;
 
+        public static string WebApiBaseAddress
+        {
+            get => AppSettings.GetValueOrDefault(nameof(WebApiBaseAddress), "http://testapi.potos.tours/api");
+            set => AppSettings.AddOrUpdateValue(nameof(WebApiBaseAddress), value);
+        }
+        private readonly string BaseUrl = WebApiBaseAddress + "/CostCentres";
+       
         public async Task<IEnumerable<CostCentre>> GetItemsAsync()
         {
             var httpClient = new HttpClient();

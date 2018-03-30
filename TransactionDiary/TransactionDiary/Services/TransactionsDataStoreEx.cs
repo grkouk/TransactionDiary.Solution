@@ -6,14 +6,22 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GrKouk.Api.Dtos;
 using Newtonsoft.Json;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using TransactionDiary.Models;
 
 namespace TransactionDiary.Services
 {
-    class TransactionsDataStoreEx : ITransactionDataStore<TransactionDto, TransactionCreateDto, TransactionModifyDto>
+    public class TransactionsDataStoreEx : ITransactionDataStore<TransactionDto, TransactionCreateDto, TransactionModifyDto>
     {
-        private const string BaseUrl = "http://testapi.potos.tours/api/transactions";
-        //private const string BaseUrl = "http://localhost:60928/api/transactions/";
+        private static ISettings AppSettings => CrossSettings.Current;
+
+        public static string WebApiBaseAddress
+        {
+            get => AppSettings.GetValueOrDefault(nameof(WebApiBaseAddress), "http://testapi.potos.tours/api");
+            set => AppSettings.AddOrUpdateValue(nameof(WebApiBaseAddress), value);
+        }
+        private readonly string BaseUrl = WebApiBaseAddress + "/transactions";
 
         public async Task<IEnumerable<TransactionDto>> GetItemsAsync()
         {
@@ -151,13 +159,13 @@ namespace TransactionDiary.Services
             try
             {
 
-                var uri = new Uri(BaseUrl+$"/{id}");
+                var uri = new Uri(BaseUrl + $"/{id}");
                 HttpContent httpContent = new StringContent(jsonItem);
                 httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 httpClient.DefaultRequestHeaders.Accept
                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-               // var response1 = await httpClient.PostAsync(uri, httpContent);
+                // var response1 = await httpClient.PostAsync(uri, httpContent);
                 var response = await httpClient.PutAsync(uri, httpContent);
 
                 if (response.IsSuccessStatusCode)
@@ -183,17 +191,17 @@ namespace TransactionDiary.Services
         public async Task<bool> DeleteItemAsync(int id)
         {
             var httpClient = new HttpClient();
-            
+
             try
             {
                 var uri = new Uri(BaseUrl + $"/{id}");
-              
+
                 httpClient.DefaultRequestHeaders.Accept
                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.DeleteAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    
+
                     return true;
                 }
                 else

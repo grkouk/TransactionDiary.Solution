@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using TransactionDiary.Models;
 
 namespace TransactionDiary.Services
 {
     public class TransactorsAutoCompleteDs:IAutoCompleteDataSource<Transactor>
     {
-        private const string BaseUrl = "http://testapi.potos.tours/api/transactors";
-        //private const string BaseUrl = "http://localhost:60928/api/transactors/";
+        private static ISettings AppSettings => CrossSettings.Current;
 
+        public static string WebApiBaseAddress
+        {
+            get => AppSettings.GetValueOrDefault(nameof(WebApiBaseAddress), "http://testapi.potos.tours/api");
+            set => AppSettings.AddOrUpdateValue(nameof(WebApiBaseAddress), value);
+        }
+        private readonly string BaseUrl = WebApiBaseAddress + "/transactors";
+      
         public async Task<IEnumerable<SearchListItem>> GetSearchListItemsAsync()
         {
             

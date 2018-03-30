@@ -5,15 +5,23 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GrKouk.Api.Dtos;
 using Newtonsoft.Json;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using TransactionDiary.Models;
 
 namespace TransactionDiary.Services
 {
     public class TransactionsDataStore:IDataStore<TransactionDto,TransactionCreateDto,TransactionDto>
     {
-        private const string BaseUrl = "http://testapi.potos.tours/api/transactions";
-       //private const string BaseUrl = "http://localhost:60928/api/transactions/";
+        private static ISettings AppSettings => CrossSettings.Current;
 
+        public static string WebApiBaseAddress
+        {
+            get => AppSettings.GetValueOrDefault(nameof(WebApiBaseAddress), "http://testapi.potos.tours/api");
+            set => AppSettings.AddOrUpdateValue(nameof(WebApiBaseAddress), value);
+        }
+        private readonly string BaseUrl = WebApiBaseAddress + "/transactions";
+       
         public async Task<IEnumerable<TransactionDto>> GetItemsAsync()
         {
             var httpClient = new HttpClient();

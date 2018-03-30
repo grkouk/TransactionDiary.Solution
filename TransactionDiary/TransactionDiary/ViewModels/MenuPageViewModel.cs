@@ -41,11 +41,22 @@ namespace TransactionDiary.ViewModels
 	        MenuItems.Add(new MyMenuItem()
 	        {
 	            Icon = "ic_viewb",
+	            PageName = nameof(TransactorPage),
+	            Title = "Transactors"
+	        });
+	        MenuItems.Add(new MyMenuItem()
+	        {
+	            Icon = "ic_viewb",
 	            PageName = nameof(CategoryPage),
 	            Title = "Categories"
 	        });
-
-	        NavigateCommand = new DelegateCommand(Navigate);
+	        MenuItems.Add(new MyMenuItem()
+	        {
+	            Icon = "ic_viewb",
+	            PageName = nameof(SettingsPage),
+	            Title = "Settings"
+	        });
+            NavigateCommand = new DelegateCommand(Navigate);
 	    }
 	    async void Navigate()
 	    {

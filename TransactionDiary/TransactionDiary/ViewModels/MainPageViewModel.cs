@@ -38,7 +38,7 @@ namespace TransactionDiary.ViewModels
 
         void ExecuteTransactionsButtonCommand()
         {
-            NavigationService.NavigateAsync("TransactionsPage");
+            NavigationService.NavigateAsync("NavigationPage/TransactionsPage");
         }
     }
 }

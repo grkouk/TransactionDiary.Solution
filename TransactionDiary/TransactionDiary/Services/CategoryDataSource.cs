@@ -5,14 +5,23 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using TransactionDiary.Models;
 using Newtonsoft.Json;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 
 namespace TransactionDiary.Services
 {
     public class CategoryDataSource : IDataStore<Category, Category, Category>
     {
-        private const string BaseUrl = "http://testapi.potos.tours/api/Categories";
-       // private const string BaseUrl = "http://localhost:60928/api/Categories/";
+        private static ISettings AppSettings => CrossSettings.Current;
 
+        public static string WebApiBaseAddress
+        {
+            get => AppSettings.GetValueOrDefault(nameof(WebApiBaseAddress), "http://testapi.potos.tours/api");
+            set => AppSettings.AddOrUpdateValue(nameof(WebApiBaseAddress), value);
+        }
+
+        private string BaseUrl = WebApiBaseAddress + "/Categories";
+      
         public async Task<IEnumerable<Category>> GetItemsAsync()
         {
             var httpClient = new HttpClient();

@@ -63,7 +63,8 @@ namespace TransactionDiary
             containerRegistry.RegisterForNavigation<CompaniesSearchListPage>();
             containerRegistry.RegisterForNavigation<CostCentrePage>();
             containerRegistry.RegisterForNavigation<CompanyPage>();
-           
+
+            containerRegistry.RegisterForNavigation<SettingsPage>();
         }
     }
 }
