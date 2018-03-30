@@ -359,14 +359,14 @@ namespace TransactionDiary.ViewModels
                 {
                     var itemTapped = (SearchListItem)parameters["CompanySelected"];
                     CompanyText = itemTapped.Name;
+                    SelectedCompanyItem = itemTapped;
                     return;
-                    //SelectedTransactorItem = transactorTapped;
                 }
                 if (parameters.ContainsKey("CοstCentreSelected"))
                 {
                     var itemTapped = (SearchListItem)parameters["CοstCentreSelected"];
                     CostCentreText = itemTapped.Name;
-                    //SelectedTransactorItem = transactorTapped;
+                    SelectedCostCentreItem = itemTapped;
                     return;
                 }
                 if (parameters.ContainsKey("CategorySelected"))
@@ -422,6 +422,56 @@ namespace TransactionDiary.ViewModels
                     else
                     {
                         SelectedCategoryItem = searchListItem;
+                    }
+
+                    return;
+                }
+                if (parameters.ContainsKey("NewCompany"))
+                {
+                    var newItem = (Company)parameters["NewCompany"];
+                    var searchListItem = new SearchListItem
+                    {
+                        Key = newItem.Id,
+                        Name = newItem.Name
+                    };
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        CompaniesCollection.Add(new SearchListItem
+                        {
+                            Key = searchListItem.Key,
+                            Name = searchListItem.Name
+                        });
+                        CompanyText = newItem.Name;
+                        SelectedCompanyItem = searchListItem;
+                    }
+                    else
+                    {
+                        SelectedCompanyItem = searchListItem;
+                    }
+
+                    return;
+                }
+                if (parameters.ContainsKey("NewCostCentre"))
+                {
+                    var newItem = (CostCentre)parameters["NewCostCentre"];
+                    var searchListItem = new SearchListItem
+                    {
+                        Key = newItem.Id,
+                        Name = newItem.Name
+                    };
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        CostCentreCollection.Add(new SearchListItem
+                        {
+                            Key = searchListItem.Key,
+                            Name = searchListItem.Name
+                        });
+                        CostCentreText = newItem.Name;
+                        SelectedCostCentreItem = searchListItem;
+                    }
+                    else
+                    {
+                        SelectedCostCentreItem = searchListItem;
                     }
 
                     return;
