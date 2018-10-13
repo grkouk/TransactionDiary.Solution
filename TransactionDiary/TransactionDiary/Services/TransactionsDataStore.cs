@@ -17,7 +17,7 @@ namespace TransactionDiary.Services
 
         public static string WebApiBaseAddress
         {
-            get => AppSettings.GetValueOrDefault(nameof(WebApiBaseAddress), "http://testapi.potos.tours/api");
+            get => AppSettings.GetValueOrDefault(nameof(WebApiBaseAddress), "http://api.villakoukoudis.com/api");
             set => AppSettings.AddOrUpdateValue(nameof(WebApiBaseAddress), value);
         }
         private readonly string BaseUrl = WebApiBaseAddress + "/transactions";

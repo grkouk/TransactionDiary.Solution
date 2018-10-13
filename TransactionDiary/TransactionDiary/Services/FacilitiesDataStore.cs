@@ -10,7 +10,7 @@ namespace TransactionDiary.Services
 {
     public class FacilitiesDataStore:IDataStore<Facility,Facility,Facility>
     {
-        private const string BaseUrl = "http://testapi.potos.tours/api/facilities/";
+        private const string BaseUrl = "http://api.villakoukoudis.com/api/facilities/";
         
         public async Task<IEnumerable<Facility>> GetItemsAsync()
         {

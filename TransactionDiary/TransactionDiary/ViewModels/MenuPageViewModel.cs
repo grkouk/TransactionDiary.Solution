@@ -61,6 +61,7 @@ namespace TransactionDiary.ViewModels
 	    async void Navigate()
 	    {
 	        await _navigationService.NavigateAsync(nameof(NavigationPage) + "/" + SelectedMenuItem.PageName);
-	    }
+	        //await _navigationService.NavigateAsync( SelectedMenuItem.PageName);
+        }
     }
 }
